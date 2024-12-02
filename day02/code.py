@@ -1,5 +1,10 @@
+import time
+t0 = time.time()
+
 data = open('input.txt').read().splitlines()
 #data = open('input_test.txt').read().splitlines()
+
+
 
 data = [line.split() for line in data]
 data = [[int(k) for k in lst] for lst in data]
@@ -29,4 +34,5 @@ def tolerate(lst):
 
 p2 = sum(tolerate(lst) for lst in data)
 print(p2)
+print(time.time()-t0)
         
