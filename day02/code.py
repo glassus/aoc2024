@@ -26,6 +26,8 @@ p1 = sum(safe(lst) for lst in data)
 #print(p1)
 
 def tolerate(lst):
+    if safe(lst):
+        return True
     for i in range(len(lst)):
         new_lst = lst[:i] + lst[i+1:]
         if safe(new_lst):
