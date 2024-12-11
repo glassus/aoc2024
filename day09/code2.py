@@ -1,8 +1,8 @@
-data = open('input.txt').read()
+data = open('day9.txt').read()
 #data = open('input_test.txt').read().splitlines()
 
-line = data[:-1]
-line = "2333133121414131402"
+line = data
+#line = "2333133121414131402"
 
 #line = "12345"
 
@@ -51,7 +51,7 @@ def part1():
 def defrag2(lst):
     id_block = 0
     id_file = len(lst)-1
-    while id_block < id_file:
+    while 0 < id_file:
         if lst[id_block] != '.':
             id_block += 1
             continue
@@ -59,14 +59,22 @@ def defrag2(lst):
             id_file -= 1
             continue
         
-        nb_dots = 0
-        while lst[id_block + nb_dots] == '.':
-            nb_dots += 1
-            
         id_target = id_file
         nb_same_id = 0
         while lst[id_file - nb_same_id] == lst[id_target]:
             nb_same_id += 1
+        
+        i_dots = 0
+        while i_dots < id_file:
+            nb_dots = 0
+            while lst[i_dots + nb_dots] == '.':
+                #print("ok")
+                nb_dots += 1
+            if nb_dots >= nb_same_id:
+                id_block = i_dots
+                #print("id_block trouvé", id_block)
+                break
+            i_dots += 1
             
         if nb_same_id <= nb_dots:
             for i in range(nb_same_id):
@@ -75,14 +83,17 @@ def defrag2(lst):
             id_file -= nb_same_id
         else:
             id_file -= nb_same_id    
-        print("".join([str(k) for k in lst]), "id_block", id_block, "id_file :", id_file)
+        #print("".join([str(k) for k in lst]), "id_block", id_block, "id_file :", id_file)
         
     return lst
 
 def part2():
     lst = gen_blocks(line)
     lst = defrag2(lst)
-    print("".join([str(k) for k in lst]))
+    with open("liste_B2.txt", 'w') as f:
+        f.write(str(lst))
+    #print("".join([str(k) for k in lst]))
+
     print(checksum(lst))
 
 part2()

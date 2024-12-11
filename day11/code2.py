@@ -4,7 +4,9 @@ data = open('input_test.txt').read().splitlines()
 import matplotlib.pyplot as plt
 
 data = "9694820 93 54276 1304 314 664481 0 4"
+data = "4"
 lst = list(map(int, data.split(" ")))
+
 
 class Stone:
     def __init__(self, val):
@@ -22,38 +24,31 @@ for i, val in enumerate(lst):
 stone_start = stones[0]
 
 def split(stone):
-    global stone_start
-    old_prev = stone.prev
-    old_next = stone.next
     val = stone.val
     l = len(str(val))
     v1 = int(str(val)[:l//2])
     v2 = int(str(val)[l//2:])
-    s1 = Stone(v1)
-    s2 = Stone(v2)
-    if old_prev != None:
-        old_prev.next = s1
-    s1.prev = old_prev
-    s1.next = s2
-    s2.prev = s1
-    s2.next = old_next
-    if old_next != None:
-        old_next.prev = s2
-    if stone == stone_start:
-        stone_start = s1
+    snew = Stone(v2)
+    stone.val = v1
+    old_next = stone.next
+    stone.next = snew
+    snew.next = old_next
     
 def blink():
     stone = stone_start
+    s = 0
     while stone != None:
         if stone.val == 0:
             stone.val = 1
             stone = stone.next
         elif len(str(stone.val)) % 2 == 0:
             split(stone)
-            stone = stone.next
+            stone = stone.next.next
+            s += 1
         else:
             stone.val *= 2024
             stone = stone.next
+    return s
 
 def affiche():
     stone = stone_start
@@ -73,7 +68,11 @@ X = []
 Y = []
 def turn(n):
     for k in range(n):
-        print(k)
-        blink()
-    print(taille())
-    
+        #print(k)
+        v = blink()
+        X.append(k)
+        Y.append(v)
+    plt.plot(X,Y)
+    plt.show()
+
+
