@@ -1,5 +1,7 @@
 data = open('input.txt').read().splitlines()
-data = open('input_test.txt').read().splitlines()
+#data = open('input_test3.txt').read().splitlines()
+from shapely import  *
+from testshapely import *
 
 from collections import defaultdict
 
@@ -46,7 +48,7 @@ def parcours():
             continue
         club, aire, perimetre = zone(pos)
         vus = vus + club
-        d[grid[pos]].append((aire, perimetre))
+        d[grid[pos]].append((aire, club))
 
 parcours()
 
@@ -57,3 +59,14 @@ def part1():
         for a, p in lst:
             s += a*p
     print(s)
+
+
+
+s = 0
+for let in d:
+    for aire, lst in d[let]:
+        #print(lst)
+        #print(nb_cotes(lst))
+        s += aire*nb_cotes(lst)
+print(s)
+        
