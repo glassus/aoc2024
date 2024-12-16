@@ -115,22 +115,6 @@ def move(grid, start, direction):
         return grid, start+dir
                 
                 
-def compte(grid):    
-    s = 0
-    for pos in grid:
-        if grid[pos] in '[]':
-            s += 1
-    return s
-
-
-# k = 20
-# for i, car in enumerate(rules):
-#     if k <= i <= k+10:
-#         affiche(grid)
-#         print(i, car)
-#         print(compte(grid))
-#     grid, start = move(grid, start, car)
-    
 
 def sum_gps(grid):
     s = 0
@@ -141,16 +125,7 @@ def sum_gps(grid):
         
 for i, car in enumerate(rules):
     grid, start = move(grid, start, car)
-#         
-        
-# grid, start = move(grid, start, 'v')
-# grid, start = move(grid, start, 'v')
-# grid, start = move(grid, start, '<')
-# grid, start = move(grid, start, '<')
-# grid, start = move(grid, start, '<')
-# grid, start = move(grid, start, '<')
-# grid, start = move(grid, start, '^')        
-        
+
         
         
         
