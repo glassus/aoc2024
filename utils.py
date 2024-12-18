@@ -26,3 +26,16 @@ def voisins(grid, pos):
         if npos in grid and True:
             lst.append(npos)
     return lst
+
+
+import networkx as nx
+
+G = nx.Graph()
+
+for pos in d:
+    if d[pos] == '.':
+        vois = voisins(pos)
+        for v in vois:
+            G.add_edge(pos, v)
+            
+chemins = nx.all_simple_paths(G, source=start, target=end)
