@@ -1,5 +1,5 @@
 data = open('input.txt').read().splitlines()
-data = open('input_test.txt').read().splitlines()
+#data = open('input_test.txt').read().splitlines()
 
 import networkx as nx
 
@@ -32,36 +32,8 @@ def voisins(grid, pos):
 
 grid, start, end = make_grid(data)
 
-def bordure(pos):
-    return pos.real == 0 or \
-           pos.real == len(data[0])-1 or \
-           pos.imag == 0 or \
-           pos.imag == len(data)-1
-
-def voisins_cheat(grid, pos):
-    lst = []
-    d = [-1, 1, 1j, -1j]
-    for dep in d:
-        npos = pos + dep
-        if npos in grid:
-            lst.append(npos)
-    return lst
-
-def set_cheat(grid):
-    s = set()
-    for pos in grid:
-        if bordure(pos):
-            continue
-        for v in voisins_cheat(grid, pos):
-            if not bordure(v):
-                s.add((pos, v))
-    return s
-
-
-def calc(p1, p2):
+def gen_path():
     grid, start, end = make_grid(data)
-    grid[p1] = '.'
-    grid[p2] = '.'
     G = nx.Graph()
     for pos in grid:
         if grid[pos] == '.':
@@ -71,17 +43,18 @@ def calc(p1, p2):
     path = nx.shortest_path(G, source=start, target=end)
     return path
 
-cheats = set_cheat(grid)
+path = gen_path()
 
-def run(save):
-    tgt = 84-save
+def dist(p1, p2):
+    p = p1 - p2
+    return abs(p.real) + abs(p.imag)
+
+def search(k):
     n = 0
-    seen = set()
-    for (p1,p2) in cheats:
-        path = calc(p1, p2)
-        if len(path)-1 == tgt:
-            if (p1, p2) not in seen and p1 in path and p2 in path:
-                n += 1
-                seen.add((p1,p2))
-            
-    return n, seen
+    for i in range(len(path)):
+        for j in range(i+3, len(path)):
+            dst = dist(path[i], path[j])
+            if dst <= 20:
+                if j - i >= k + dst:
+                    n += 1
+    return n

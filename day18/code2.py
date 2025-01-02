@@ -1,6 +1,9 @@
 data, w, h = open('input.txt').read().splitlines(), 71, 71
 #data, w, h = open('input_test.txt').read().splitlines(), 7, 7
 import networkx as nx
+import time
+
+t0 = time.time()
 
 def parse(i):
     lst_pos = []
@@ -62,4 +65,4 @@ while True:
         a = m + 1
     except:
         b = m -1
-        
+print(time.time()-t0)    

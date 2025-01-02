@@ -5,6 +5,8 @@ data_towels, data_goals = open('input.txt').read().split('\n\n')
 towels = data_towels.split('\n')[0].split(', ')
 goals = data_goals.split('\n')
 
+d = {}
+towels = sorted(towels, key=lambda x: len(x))
 
 def nb_combs(goal):
     c = 0
@@ -23,7 +25,7 @@ def nb_combs(goal):
 
 n = 0
 for goal in goals:
-    print(goal)
+    #print(goal)
     if nb_combs(goal) > 0:
         n += 1
 print(n)
